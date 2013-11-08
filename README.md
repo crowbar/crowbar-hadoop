@@ -1,2 +1,0 @@
-barclamp-hadoop_infrastructure
-==============================
