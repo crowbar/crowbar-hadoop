@@ -1,0 +1,130 @@
+
+%p{:style => 'float:right'}
+ = link_to t('.export'), nodes_barclamp_path(:controller=>'hadoop_infrastructure', :format=>'text'), :class => 'button'
+%h1= t('.title')
+
+%h4= t('.adminnodes')
+%table.data.box
+ %thead
+  %tr
+   %th= t('.ip_addr')
+   %th= t('.name')
+   %th= t('.cpu')
+   %th= t('.ram')
+   %th= t('.drives')
+ %tbody
+ - @hadoop_config[:adminnodes].each do |node|
+  %tr.node{ :class => cycle(:odd, :even, :name => "nodes"), :id => node.alias }
+   %td= node.ip
+   %td= link_to node.name, node_path(node.handle)
+   %td= node.cpu
+   %td= format_memory(node.memory)
+   %td= node.number_of_drives
+
+%h4= t('.servernodes')
+%table.data.box
+ %thead
+  %tr
+   %th= t('.ip_addr')
+   %th= t('.name')
+   %th= t('.cpu')
+   %th= t('.ram')
+   %th= t('.drives')
+ %tbody
+ - @hadoop_config[:servernodes].each do |node|
+  %tr.node{ :class => cycle(:odd, :even, :name => "nodes"), :id => node.alias }
+   %td= node.ip
+   %td= link_to node.name, node_path(node.handle)
+   %td= node.cpu
+   %td= format_memory(node.memory)
+   %td= node.number_of_drives
+   
+%h4=t('.namenodes')
+%table.data.box
+ %thead
+  %tr
+   %th= t('.ip_addr')
+   %th= t('.name')
+   %th= t('.cpu')
+   %th= t('.ram')
+   %th= t('.drives')
+ %tbody
+ - @hadoop_config[:namenodes].each do |node|
+  %tr.node{ :class => cycle(:odd, :even, :name => "nodes"), :id => node.alias }
+   %td= node.ip
+   %td= link_to node.name, node_path(node.handle)
+   %td= node.cpu
+   %td= format_memory(node.memory)
+   %td= node.number_of_drives
+
+%h4=t('.datanodes')
+%table.data.box
+ %thead
+  %tr
+   %th= t('.ip_addr')
+   %th= t('.name')
+   %th= t('.cpu')
+   %th= t('.ram')
+   %th= t('.drives')
+ %tbody
+ - @hadoop_config[:datanodes].each do |node|
+  %tr.node{ :class => cycle(:odd, :even, :name => "nodes"), :id => node.alias }
+   %td= node.ip
+   %td= link_to node.name, node_path(node.handle)
+   %td= node.cpu
+   %td= format_memory(node.memory)
+   %td= node.number_of_drives
+
+%h4= t('.edgenodes')
+%table.data.box
+ %thead
+  %tr
+   %th= t('.ip_addr')
+   %th= t('.name')
+   %th= t('.cpu')
+   %th= t('.ram')
+   %th= t('.drives')
+  %tbody
+  - @hadoop_config[:edgenodes].each do |node|
+   %tr.node{ :class => cycle(:odd, :even, :name => "nodes"), :id => node.alias }
+    %td= node.ip
+    %td= link_to node.name, node_path(node.handle)
+    %td= node.cpu
+    %td= format_memory(node.memory)
+    %td= node.number_of_drives
+
+%h4= t('.hajournalingnodes')
+%table.data.box
+ %thead
+  %tr
+   %th= t('.ip_addr')
+   %th= t('.name')
+   %th= t('.cpu')
+   %th= t('.ram')
+   %th= t('.drives')
+ %tbody
+ - @hadoop_config[:hajournalingnodes].each do |node|
+  %tr.node{ :class => cycle(:odd, :even, :name => "nodes"), :id => node.alias }
+   %td= node.ip
+   %td= link_to node.name, node_path(node.handle)
+   %td= node.cpu
+   %td= format_memory(node.memory)
+   %td= node.number_of_drives
+
+%h4= t('.hafilernodes')
+%table.data.box
+ %thead
+  %tr
+   %th= t('.ip_addr')
+   %th= t('.name')
+   %th= t('.cpu')
+   %th= t('.ram')
+   %th= t('.drives')
+ %tbody
+ - @hadoop_config[:hafilernodes].each do |node|
+  %tr.node{ :class => cycle(:odd, :even, :name => "nodes"), :id => node.alias }
+   %td= node.ip
+   %td= link_to node.name, node_path(node.handle)
+   %td= node.cpu
+   %td= format_memory(node.memory)
+   %td= node.number_of_drives

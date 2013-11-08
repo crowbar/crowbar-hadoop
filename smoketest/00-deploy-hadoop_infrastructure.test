@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "Hadoop Infrastructure smoketest passed."
+exit 0
