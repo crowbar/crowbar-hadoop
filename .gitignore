@@ -1,0 +1,6 @@
+*.lock
+*.lck
+*.swp
+*.tmp
+.project
+.loadpath

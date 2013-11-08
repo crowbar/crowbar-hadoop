@@ -1,0 +1,19 @@
+%h3 Display the Hadoop cluster node information
+= link_to( "Hadoop Cluster Node Information", "nodes") 
+%p
+  = render :partial => "barclamp/node_selector"
+
+:javascript
+  $(document).ready(function(){
+    var constraints = { 
+      "hadoop_infrastructure-cb-adminnode": { "unique": false, "count": -1, "admin": true },
+      "hadoop_infrastructure-server": { "unique": false, "count": -1 },
+      "hadoop_infrastructure-namenode": { "unique": false, "count": -1 },
+      "hadoop_infrastructure-datanode": { "unique": false, "count": -1 },
+      "hadoop_infrastructure-edgenode": { "unique": false, "count": -1 },
+      "hadoop_infrastructure-ha-journalingnode": { "unique": false, "count": -1 },
+      "hadoop_infrastructure-ha-filernode": { "unique": false, "count": -1 }
+    };
+    node_selector($('#drag_drop'), constraints)
+  });
+
