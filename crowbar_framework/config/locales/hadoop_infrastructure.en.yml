@@ -1,0 +1,41 @@
+en:
+  barclamp:
+    hadoop_infrastructure:
+      edit_deployment:
+        deployment: Deployment
+      edit_attributes:
+        attributes: Proposal Attributes
+        barclamp_settings: Barclamp
+        debug: Log Debug Messages
+        os_settings: Operating System
+        fs_type: File System Type
+        thp_compaction: THP Compaction
+        mapred_openfiles: Map/Reduce File Handles
+        hdfs_openfiles: HDFS File Handles
+        hbase_openfiles: HBASE File Handles
+        ha_settings: Hadoop High Availability
+        shared_edits_directory: Shared Edits Directory
+        shared_edits_export_options: Shared Edits Export Options
+        shared_edits_mount_options: Shared Edits Mount Options
+      index:
+        barclamp: Project
+        state: Status
+        proposal: Proposal
+        description: Provides the basic runtime environment for Hadoop cluster deployment.
+        instructions: Apply proposals in order from top to bottom. Allow each proposal to enter ready state before applying the next one.
+      nodes:
+        export: Export to CSV
+        title: Hadoop Cluster Node Information
+        name: Name
+        ip_addr: IP Address
+        alias: Alias
+        cpu: CPU
+        ram: RAM
+        drives: Drives
+        adminnodes: Crowbar Admin Node
+        servernodes: Hadoop Server Node
+        namenodes: Hadoop Name Nodes
+        datanodes: Hadoop Data Nodes
+        edgenodes: Hadoop Edge Nodes
+        hajournalingnodes: Hadoop High Availability Journaling Nodes
+        hafilernodes: Hadoop High Availability Filer Nodes
