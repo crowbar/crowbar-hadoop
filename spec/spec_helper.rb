@@ -15,32 +15,31 @@
 # limitations under the License.
 #
 
-barclamp:
-  name: hadoop_infrastructure
-  display: Hadoop Infrastructure
-  version: 0
-  requires:
-    - '@crowbar'
-  member:
-    - apachehadoop
-  supercedes:
-    - hadoop
-    - zookeeper
-    - hive
-    - sqoop
+require "simplecov"
 
-crowbar:
-  layout: 1
-  order: 300
-  run_order: 300
-  chef_order: 300
+if ENV["CODECLIMATE_REPO_TOKEN"]
+  require "coveralls"
+  require "codeclimate-test-reporter"
 
-debs:
-  pkgs:
-    # SQL
-    - mysql-server
-    - postgresql
-    - postgresql-server
+  Coveralls.wear!
+  CodeClimate::TestReporter.start
 
-smoketest:
-  timeout: 900
+  SimpleCov.start do
+    add_filter "/spec"
+
+    formatter SimpleCov::Formatter::MultiFormatter[
+      SimpleCov::Formatter::HTMLFormatter,
+      CodeClimate::TestReporter::Formatter
+    ]
+  end
+else
+  SimpleCov.start do
+    add_filter "/spec"
+  end
+end
+
+require "rspec"
+
+RSpec.configure do |config|
+  config.mock_with :rspec
+end
