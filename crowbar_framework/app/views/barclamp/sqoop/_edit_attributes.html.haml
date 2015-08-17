@@ -1,0 +1,44 @@
+
+%input#proposal_attributes{:type => "hidden", :name => "proposal_attributes", :value => @proposal.raw_data['attributes'][@proposal.barclamp].to_json}
+%p
+  %label{:for => "proposal_attributes"}= t('.attributes')
+  = link_to "Raw", proposal_barclamp_path(:id => @proposal.name, :controller => @proposal.barclamp, :dep_raw => @dep_raw, :attr_raw => true), :style => "float: right;"
+  %div.container
+    
+    %p
+      %label{ :for => :sqoop_connection_factories }= t('.sqoop_connection_factories')
+      %input#sqoop_connection_factories{:type => "text", :name => "sqoop_connection_factories", :'data-default' => @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_connection_factories"], :onchange => "update_value('sqoop_connection_factories', 'sqoop_connection_factories', 'string')"}
+
+    %p
+      %label{ :for => :sqoop_tool_plugins }= t('.sqoop_tool_plugins')
+      %input#sqoop_tool_plugins{:type => "text", :name => "sqoop_tool_plugins", :'data-default' => @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_tool_plugins"], :onchange => "update_value('sqoop_tool_plugins', 'sqoop_tool_plugins', 'string')"}
+
+    %p
+      %label{ :for => :sqoop_metastore_client_enable_autoconnect }= t('.sqoop_metastore_client_enable_autoconnect')
+      = select_tag :sqoop_metastore_client_enable_autoconnect, options_for_select([["true","true"], ["false", "false"]], @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_metastore_client_enable_autoconnect"]), :onchange => "update_value('sqoop_metastore_client_enable_autoconnect', 'sqoop_metastore_client_enable_autoconnect', 'string')"
+
+    %p
+      %label{ :for => :sqoop_metastore_client_autoconnect_url }= t('.sqoop_metastore_client_autoconnect_url')
+      %input#sqoop_metastore_client_autoconnect_url{:type => "text", :name => "sqoop_metastore_client_autoconnect_url", :'data-default' => @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_metastore_client_autoconnect_url"], :onchange => "update_value('sqoop_metastore_client_autoconnect_url', 'sqoop_metastore_client_autoconnect_url', 'string')"}
+
+    %p
+      %label{ :for => :sqoop_metastore_client_autoconnect_username }= t('.sqoop_metastore_client_autoconnect_username')
+      %input#sqoop_metastore_client_autoconnect_username{:type => "text", :name => "sqoop_metastore_client_autoconnect_username", :'data-default' => @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_metastore_client_autoconnect_username"], :onchange => "update_value('sqoop_metastore_client_autoconnect_username', 'sqoop_metastore_client_autoconnect_username', 'string')"}
+
+    %p
+      %label{ :for => :sqoop_metastore_client_autoconnect_password }= t('.sqoop_metastore_client_autoconnect_password')
+      %input#sqoop_metastore_client_autoconnect_password{:type => "text", :name => "sqoop_metastore_client_autoconnect_password", :'data-default' => @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_metastore_client_autoconnect_password"], :onchange => "update_value('sqoop_metastore_client_autoconnect_password', 'sqoop_metastore_client_autoconnect_password', 'string')"}
+
+    %p
+      %label{ :for => :sqoop_metastore_client_record_password }= t('.sqoop_metastore_client_record_password')
+      = select_tag :sqoop_metastore_client_record_password, options_for_select([["true","true"], ["false", "false"]], @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_metastore_client_record_password"]), :onchange => "update_value('sqoop_metastore_client_record_password', 'sqoop_metastore_client_record_password', 'string')"
+
+    %p
+      %label{ :for => :sqoop_metastore_server_location }= t('.sqoop_metastore_server_location')
+      %input#sqoop_metastore_server_location{:type => "text", :name => "sqoop_metastore_server_location", :'data-default' => @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_metastore_server_location"], :onchange => "update_value('sqoop_metastore_server_location', 'sqoop_metastore_server_location', 'string')"}
+
+    %p
+      %label{ :for => :sqoop_metastore_server_port }= t('.sqoop_metastore_server_port')
+      %input#sqoop_metastore_server_port{:type => "text", :name => "sqoop_metastore_server_port", :'data-default' => @proposal.raw_data['attributes'][@proposal.barclamp]["sqoop_metastore_server_port"], :onchange => "update_value('sqoop_metastore_server_port', 'sqoop_metastore_server_port', 'string')"}
+
+  

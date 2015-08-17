@@ -1,0 +1,41 @@
+{
+  "id": "bc-template-sqoop",
+  "description": "SQL based command-line tool to assist with HDFS data import/export (SQL-to-Hadoop).",
+  "attributes": {
+    "sqoop": {
+      "debug": true,
+      "sqoop_connection_factories": "",
+      "sqoop_tool_plugins": "",
+      "sqoop_metastore_client_enable_autoconnect": "true",
+      "sqoop_metastore_client_autoconnect_url": "",
+      "sqoop_metastore_client_autoconnect_username": "",
+      "sqoop_metastore_client_autoconnect_password": "",
+      "sqoop_metastore_client_record_password": "",
+      "sqoop_metastore_server_location": "",
+      "sqoop_metastore_server_port": ""
+    }
+  },
+  "deployment": {
+    "sqoop": {
+      "crowbar-revision": 0,
+      "element_states": {
+        "sqoop-interpreter": [ "readying", "ready", "applying" ]
+      },
+      "elements": {},
+      "element_order": [
+        [
+         "sqoop-interpreter"
+        ]
+      ],
+      "config": {
+        "environment": "sqoop-base-config",
+        "mode": "full",
+        "transitions": true,
+        "transition_list": [
+          "installed"
+        ]
+      } 
+    }
+  }
+}
+
