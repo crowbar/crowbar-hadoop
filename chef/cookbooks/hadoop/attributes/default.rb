@@ -31,10 +31,10 @@ default[:hadoop][:debug] = true
 
 # Cluster attributes.
 default[:hadoop][:cluster] = {}
-default[:hadoop][:cluster][:master_name_nodes] = [ ]
-default[:hadoop][:cluster][:secondary_name_nodes] = [ ]
-default[:hadoop][:cluster][:edge_nodes] = [ ]
-default[:hadoop][:cluster][:slave_nodes] = [ ]
+default[:hadoop][:cluster][:master_name_nodes] = []
+default[:hadoop][:cluster][:secondary_name_nodes] = []
+default[:hadoop][:cluster][:edge_nodes] = []
+default[:hadoop][:cluster][:slave_nodes] = []
 
 # File system ownership settings.
 default[:hadoop][:cluster][:valid_config] = true

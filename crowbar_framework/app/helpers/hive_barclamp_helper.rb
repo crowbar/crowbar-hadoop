@@ -30,9 +30,9 @@ module HiveBarclampHelper
   def metastore_modes_for_hive(selected)
     options_for_select(
       [
-        ['Embedded Mode (Apache Derby)', 'embedded'],
-        ['Local Mode', 'local'],
-        ['Standalone Mode (Remote)', 'remote']
+        ["Embedded Mode (Apache Derby)", "embedded"],
+        ["Local Mode", "local"],
+        ["Standalone Mode (Remote)", "remote"]
       ],
       selected.to_s
     )

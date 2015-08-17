@@ -35,9 +35,9 @@ search(:node, "roles:hadoop_infrastructure-ha-filernode#{env_filter}") do |n|
   end
 end
 
-# Make the HA file system mount if HA filer active. 
+# Make the HA file system mount if HA filer active.
 if ha_filer_active
-  include_recipe 'hadoop_infrastructure::cm-ha-filer-mount'
+  include_recipe "hadoop_infrastructure::cm-ha-filer-mount"
 end
 
 #######################################################################

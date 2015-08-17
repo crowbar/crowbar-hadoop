@@ -42,28 +42,28 @@ end
 # Define our services so we can register notify events them.
 # Make sure the job tracker doesn't start up on reboot.
 service "hadoop-0.20-secondarynamenode" do
-  supports :start => true, :stop => true, :status => true, :restart => true
+  supports start: true, stop: true, status: true, restart: true
   # Subscribe to common configuration change events (default.rb).
-  subscribes :restart, resources(:directory => node[:hadoop][:env][:hadoop_log_dir])
-  subscribes :restart, resources(:directory => node[:hadoop][:core][:hadoop_tmp_dir])
-  subscribes :restart, resources(:directory => node[:hadoop][:core][:fs_s3_buffer_dir])
-  subscribes :restart, resources(:template => "/etc/security/limits.conf")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/masters")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/slaves")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/core-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hdfs-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/mapred-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hadoop-env.sh")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hadoop-metrics.properties")
+  subscribes :restart, resources(directory: node[:hadoop][:env][:hadoop_log_dir])
+  subscribes :restart, resources(directory: node[:hadoop][:core][:hadoop_tmp_dir])
+  subscribes :restart, resources(directory: node[:hadoop][:core][:fs_s3_buffer_dir])
+  subscribes :restart, resources(template: "/etc/security/limits.conf")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/masters")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/slaves")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/core-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hdfs-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/mapred-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hadoop-env.sh")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hadoop-metrics.properties")
 end
 
 # Install the jobtracker package but keep it disabled.
 service "hadoop-0.20-jobtracker" do
-  supports :start => true, :stop => true, :status => true, :restart => true
+  supports start: true, stop: true, status: true, restart: true
   action :disable
 end
 
-# Create dfs_name_secondary directory and set ownership/permissions. 
+# Create dfs_name_secondary directory and set ownership/permissions.
 dfs_name_secondary = "/var/lib/hadoop-0.20/dfs/namesecondary"
 directory dfs_name_secondary do
   owner hdfs_owner
@@ -71,11 +71,11 @@ directory dfs_name_secondary do
   mode "0775"
   recursive true
   action :create
-  notifies :restart, resources(:service => "hadoop-0.20-secondarynamenode")
+  notifies :restart, resources(service: "hadoop-0.20-secondarynamenode")
 end
 
-# Create fs_checkpoint_dir and set ownership/permissions (/tmp/hadoop-metadata). 
-fs_checkpoint_dir = node[:hadoop][:core][:fs_checkpoint_dir] 
+# Create fs_checkpoint_dir and set ownership/permissions (/tmp/hadoop-metadata).
+fs_checkpoint_dir = node[:hadoop][:core][:fs_checkpoint_dir]
 fs_checkpoint_dir.each do |path|
   directory path do
     owner hdfs_owner
@@ -83,7 +83,7 @@ fs_checkpoint_dir.each do |path|
     recursive true
     mode "0775"
     action :create
-    notifies :restart, resources(:service => "hadoop-0.20-secondarynamenode")
+    notifies :restart, resources(service: "hadoop-0.20-secondarynamenode")
   end
 end
 
@@ -91,12 +91,12 @@ end
 if node[:hadoop][:cluster][:valid_config]
   Chef::Log.info("HADOOP : CONFIGURATION VALID - STARTING SECONDARY NAME NODE SERVICES")
   service "hadoop-0.20-secondarynamenode" do
-    action [ :enable, :start ] 
+    action [:enable, :start]
   end
 else
   Chef::Log.info("HADOOP : CONFIGURATION INVALID - STOPPING SECONDARY NAME NODE SERVICES")
   service "hadoop-0.20-secondarynamenode" do
-    action [ :disable, :stop ] 
+    action [:disable, :stop]
   end
 end
 

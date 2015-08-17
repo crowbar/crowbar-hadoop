@@ -95,11 +95,11 @@ end
 #----------------------------------------------------------------------
 group "hadoop" do
   gid 602
-  members ['hdfs', 'mapred']
+  members ["hdfs", "mapred"]
 end
 
 #######################################################################
-# Configure /etc/security/limits.conf.  
+# Configure /etc/security/limits.conf.
 # mapred      -    nofile     32768
 # hdfs        -    nofile     32768
 # hbase       -    nofile     32768
@@ -117,7 +117,7 @@ end
 keys = {}
 
 #----------------------------------------------------------------------
-# namenode keys. 
+# namenode keys.
 #----------------------------------------------------------------------
 if node[:hadoop_infrastructure][:cluster][:namenodes]
   node[:hadoop_infrastructure][:cluster][:namenodes].each do |n|
@@ -128,7 +128,7 @@ if node[:hadoop_infrastructure][:cluster][:namenodes]
 end
 
 #----------------------------------------------------------------------
-# datanode keys. 
+# datanode keys.
 #----------------------------------------------------------------------
 if node[:hadoop_infrastructure][:cluster][:datanodes]
   node[:hadoop_infrastructure][:cluster][:datanodes].each do |n|
@@ -139,7 +139,7 @@ if node[:hadoop_infrastructure][:cluster][:datanodes]
 end
 
 #----------------------------------------------------------------------
-# edgenode keys. 
+# edgenode keys.
 #----------------------------------------------------------------------
 if node[:hadoop_infrastructure][:cluster][:edgenodes]
   node[:hadoop_infrastructure][:cluster][:edgenodes].each do |n|
@@ -150,7 +150,7 @@ if node[:hadoop_infrastructure][:cluster][:edgenodes]
 end
 
 #----------------------------------------------------------------------
-# cmservernodes keys. 
+# cmservernodes keys.
 #----------------------------------------------------------------------
 if node[:hadoop_infrastructure][:cluster][:cmservernodes]
   node[:hadoop_infrastructure][:cluster][:cmservernodes].each do |n|
@@ -161,7 +161,7 @@ if node[:hadoop_infrastructure][:cluster][:cmservernodes]
 end
 
 #----------------------------------------------------------------------
-# hafilernode keys. 
+# hafilernode keys.
 #----------------------------------------------------------------------
 if node[:hadoop_infrastructure][:cluster][:hafilernodes]
   node[:hadoop_infrastructure][:cluster][:hafilernodes].each do |n|
@@ -172,7 +172,7 @@ if node[:hadoop_infrastructure][:cluster][:hafilernodes]
 end
 
 #----------------------------------------------------------------------
-# hajournalingnode keys. 
+# hajournalingnode keys.
 #----------------------------------------------------------------------
 if node[:hadoop_infrastructure][:cluster][:hajournalingnodes]
   node[:hadoop_infrastructure][:cluster][:hajournalingnodes].each do |n|
@@ -183,7 +183,7 @@ if node[:hadoop_infrastructure][:cluster][:hajournalingnodes]
 end
 
 #######################################################################
-# Add hadoop nodes to SSH authorized key list. 
+# Add hadoop nodes to SSH authorized key list.
 #######################################################################
 keys.each do |k,v|
   unless v.nil? or v.empty?
@@ -194,7 +194,7 @@ keys.each do |k,v|
   end
 end
 
-node.save 
+node.save
 
 #######################################################################
 # End recipe

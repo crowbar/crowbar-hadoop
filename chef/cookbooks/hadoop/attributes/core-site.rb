@@ -27,14 +27,14 @@
 # should store the temporary images to merge. If this is a comma-delimited
 # list of directories then the image is replicated in all of the
 # directories for redundancy.
-default[:hadoop][:core][:fs_checkpoint_dir] = [ "/tmp/hadoop-metadata" ]
+default[:hadoop][:core][:fs_checkpoint_dir] = ["/tmp/hadoop-metadata"]
 
 # Determines where on the local filesystem the DFS secondary name node
 # should store the temporary edits to merge. If this is a comma-delimited
 # list of directoires then teh edits is replicated in all of the
 # directoires for redundancy.
 # DEFAULT: ${fs.checkpoint.dir}
-default[:hadoop][:core][:fs_checkpoint_edits_dir] = [ "/tmp/hadoop-metadata" ]
+default[:hadoop][:core][:fs_checkpoint_edits_dir] = ["/tmp/hadoop-metadata"]
 
 # The number of seconds between two periodic checkpoints.
 default[:hadoop][:core][:fs_checkpoint_period] = "3600"

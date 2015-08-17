@@ -50,7 +50,7 @@ end
 node[:hadoop][:cluster][:valid_config] = true
 
 keys = {}
-# Find the master name nodes (there should only be one). 
+# Find the master name nodes (there should only be one).
 master_name_nodes = Array.new
 master_name_node_objects = Array.new
 search(:node, "roles:hadoop-masternamenode") do |nmas|
@@ -73,7 +73,7 @@ elsif master_name_nodes.length > 1
   node[:hadoop][:cluster][:valid_config] = false
 end
 
-# Find the secondary name nodes (there should only be one). 
+# Find the secondary name nodes (there should only be one).
 secondary_name_nodes = Array.new
 secondary_name_node_objects = Array.new
 search(:node, "roles:hadoop-secondarynamenode") do |nsec|
@@ -96,26 +96,26 @@ elsif secondary_name_nodes.length > 1
   node[:hadoop][:cluster][:valid_config] = false
 end
 
-# Find the edge nodes. 
+# Find the edge nodes.
 edge_nodes = Array.new
 search(:node, "roles:hadoop-edgenode") do |nedge|
   # search(:node, "roles:hadoop-edgenode#{env_filter}") do |nedge|
   if !nedge[:fqdn].nil? && !nedge[:fqdn].empty?
     Chef::Log.info("HADOOP : EDGE [#{nedge[:fqdn]}") if debug
-    edge_nodes << nedge[:fqdn] 
+    edge_nodes << nedge[:fqdn]
     keys[nedge.name] = nedge["crowbar"]["ssh"]["root_pub_key"] rescue nil
   end
 end
 node[:hadoop][:cluster][:edge_nodes] = edge_nodes
 
-# Find the slave nodes. 
+# Find the slave nodes.
 Chef::Log.info("HADOOP : env filter [#{env_filter}]") if debug
 slave_nodes = Array.new
 search(:node, "roles:hadoop-slavenode") do |nslave|
   # search(:node, "roles:hadoop-slavenode#{env_filter}") do |nslave|
   if !nslave[:fqdn].nil? && !nslave[:fqdn].empty?
     Chef::Log.info("HADOOP : SLAVE [#{nslave[:fqdn]}") if debug
-    slave_nodes << nslave[:fqdn] 
+    slave_nodes << nslave[:fqdn]
     keys[nslave.name] = nslave["crowbar"]["ssh"]["root_pub_key"] rescue nil
   end
 end
@@ -150,7 +150,7 @@ master_node_ip = "0.0.0.0"
 if !master_name_node_objects.nil? && master_name_node_objects.length > 0
   master_node_ip = BarclampLibrary::Barclamp::Inventory.get_network_by_type(master_name_node_objects[0],"admin").address
 end
-if master_node_ip.nil? || master_node_ip.empty? || master_node_ip == "0.0.0.0"  
+if master_node_ip.nil? || master_node_ip.empty? || master_node_ip == "0.0.0.0"
   Chef::Log.info("HADOOP : WARNING - Invalid master name node IP #{master_node_ip}")
   node[:hadoop][:cluster][:valid_config] = false
 else
@@ -169,7 +169,7 @@ secondary_node_ip = "0.0.0.0"
 if !secondary_name_node_objects.nil? && secondary_name_node_objects.length > 0
   secondary_node_ip = BarclampLibrary::Barclamp::Inventory.get_network_by_type(secondary_name_node_objects[0],"admin").address
 end
-if secondary_node_ip.nil? || secondary_node_ip.empty? || secondary_node_ip == "0.0.0.0"  
+if secondary_node_ip.nil? || secondary_node_ip.empty? || secondary_node_ip == "0.0.0.0"
   Chef::Log.info("HADOOP : WARNING - Invalid secondary name node IP #{secondary_node_ip}")
   node[:hadoop][:cluster][:valid_config] = false
 else
@@ -188,7 +188,7 @@ if debug
   end
 end
 
-# "Add hadoop nodes to authorized key file" 
+# "Add hadoop nodes to authorized key file"
 keys.each do |k,v|
   unless v.nil?
     node["crowbar"]["ssh"] = {} if node["crowbar"]["ssh"].nil?
@@ -197,9 +197,9 @@ keys.each do |k,v|
   end
 end
 
-node.save 
+node.save
 
-# Create hadoop_log_dir and set ownership/permissions (/var/log/hadoop). 
+# Create hadoop_log_dir and set ownership/permissions (/var/log/hadoop).
 hadoop_log_dir = node[:hadoop][:env][:hadoop_log_dir]
 directory hadoop_log_dir do
   owner process_owner
@@ -233,7 +233,7 @@ end
 mapred_system_dir = node[:hadoop][:mapred][:mapred_system_dir]
 mapred_system_dir.each do |path|
   dir = ""
-  path.split('/').each do |d|
+  path.split("/").each do |d|
     next if (d.nil? || d.empty?)
     dir = "#{dir}/#{d}"
     directory dir do
@@ -273,7 +273,7 @@ end
 # Process common hadoop related configuration templates.
 #######################################################################
 
-# Configure /etc/security/limits.conf.  
+# Configure /etc/security/limits.conf.
 # mapred      -    nofile     32768
 # hdfs        -    nofile     32768
 # hbase       -    nofile     32768
@@ -284,7 +284,7 @@ template "/etc/security/limits.conf" do
   source "limits.conf.erb"
 end
 
-# Configure the master nodes.  
+# Configure the master nodes.
 template "/etc/hadoop/conf/masters" do
   owner process_owner
   group hadoop_group
@@ -292,7 +292,7 @@ template "/etc/hadoop/conf/masters" do
   source "masters.erb"
 end
 
-# Configure the slave nodes.  
+# Configure the slave nodes.
 template "/etc/hadoop/conf/slaves" do
   owner process_owner
   group hadoop_group

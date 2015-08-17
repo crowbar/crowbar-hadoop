@@ -28,7 +28,7 @@
 # connections to databases. Set the value of this property to explicitly
 # enable third-party ManagerFactory plugins. If this is not used, you can
 # alternately specify a set of ManagerFactories in the $SQOOP_CONF_DIR/managers.d/
-# subdirectory.  Each file should contain one or more lines like: 
+# subdirectory.  Each file should contain one or more lines like:
 # manager.class.name[=/path/to/containing.jar]. Files will be consulted in
 # lexicographical order only if this property is unset.
 default[:sqoop][:sqoop_connection_factories] = ""
@@ -57,7 +57,7 @@ default[:sqoop][:sqoop_metastore_client_autoconnect_url] = ""
 # arguments to control the auto-connect process with greater precision.
 #######################################################################
 
-# The username to bind to the metastore. 
+# The username to bind to the metastore.
 default[:sqoop][:sqoop_metastore_client_autoconnect_username] = ""
 
 # The password to bind to the metastore.
@@ -72,13 +72,13 @@ default[:sqoop][:sqoop_metastore_client_record_password] = ""
 #######################################################################
 # SERVER CONFIGURATION: If you plan to run a Sqoop
 # metastore on this machine, you should set these parameters
-# appropriately. You should then configure clients with: 
+# appropriately. You should then configure clients with:
 # sqoop.metastore.client.autoconnect.url =
 # jdbc:hsqldb:hsql://&lt;server-name&gt;:&lt;port&gt;/sqoop
 #######################################################################
 
 # Path to the shared metastore database files. If this is not set, it will
-# be placed in ~/.sqoop/.  
+# be placed in ~/.sqoop/.
 default[:sqoop][:sqoop_metastore_server_location] = ""
 
 # Port that this metastore should listen on.

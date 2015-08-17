@@ -44,7 +44,7 @@ end
 #----------------------------------------------------------------------
 # Create the directory for the HA filer mount point if not already present.
 # Note: This chef directory code block will fail if the directory is already mounted.
-# The File.exists?() check protects us against that condition.  
+# The File.exists?() check protects us against that condition.
 #----------------------------------------------------------------------
 if not File.exists?(shared_edits_directory)
   Chef::Log.info("HI - Creating HA mount directory [#{shared_edits_directory}]") if debug
@@ -71,14 +71,14 @@ end
 # Ensure that the hadoop filer mount point is in the fstab and that the file system is mounted.
 # 192.168.124.81:/dfs/ha  /dfs/ha nfs defaults 0 0
 #----------------------------------------------------------------------
-if ha_filer_ip && !ha_filer_ip.empty? 
+if ha_filer_ip && !ha_filer_ip.empty?
   source_device = "#{ha_filer_ip}:#{shared_edits_directory}"
   mount shared_edits_directory do
     device source_device
     fstype "nfs"
     options shared_edits_mount_options
-    dump 0  
-    pass 0 
+    dump 0
+    pass 0
     action [:mount, :enable]
   end
 end

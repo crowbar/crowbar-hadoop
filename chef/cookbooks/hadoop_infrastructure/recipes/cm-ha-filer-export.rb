@@ -45,9 +45,9 @@ nfs_packages.each do |pkg|
 end
 
 #----------------------------------------------------------------------
-# Create the directory for the HA filer export point if not already present. 
+# Create the directory for the HA filer export point if not already present.
 # Note: The chef directory code block will fail if the directory is already exported.
-# The File.exists?() check protects us against this condition.  
+# The File.exists?() check protects us against this condition.
 #----------------------------------------------------------------------
 if not File.exists?(shared_edits_directory)
   Chef::Log.info("HI - Creating HA export directory [#{shared_edits_directory}]") if debug
@@ -66,8 +66,8 @@ end
 # /etc/init.d/rpcbind {start|stop|status|restart|reload|force-reload|condrestart|try-restart}
 #----------------------------------------------------------------------
 service "rpcbind" do
-  supports :start => true, :stop => true, :status => true, :restart => true  
-  action [ :enable, :start ]
+  supports start: true, stop: true, status: true, restart: true
+  action [:enable, :start]
 end
 
 #----------------------------------------------------------------------
@@ -75,8 +75,8 @@ end
 # nfs {start|stop|status|restart|reload|force-reload|condrestart|try-restart|condstop}
 #----------------------------------------------------------------------
 service "nfs" do
-  supports :start => true, :stop => true, :status => true, :restart => true  
-  action [ :enable, :start ]
+  supports start: true, stop: true, status: true, restart: true
+  action [:enable, :start]
 end
 
 # Ensure that the HA filer file system is exported.
@@ -92,17 +92,17 @@ exports_file = "/etc/exports"
 file exports_file do
   new_lines = "#{shared_edits_directory} #{admin_subnet}/#{admin_netmask}(#{shared_edits_export_options})"
   Chef::Log.info("HI - exportfs check [#{new_lines}]") if debug
-  
+
   # Get current content, check for duplication
   only_if do
     current_content = File.read(exports_file)
     current_content.index(shared_edits_directory).nil?
   end
-  
+
   # Set up the file and content.
   owner "root"
   group "root"
-  mode  "0644"
+  mode "0644"
   current_content = File.read(exports_file)
   new_content = current_content + new_lines
   content "#{new_content}\n"

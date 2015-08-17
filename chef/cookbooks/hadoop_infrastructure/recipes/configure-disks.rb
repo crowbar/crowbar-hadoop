@@ -76,17 +76,17 @@ def get_uuid(disk)
   uuid
 end
 
-Chef::Log.info("HI - found disk: #{to_use_disks.join(':')} fs_type: [#{fs_type}]") if debug  
+Chef::Log.info("HI - found disk: #{to_use_disks.join(':')} fs_type: [#{fs_type}]") if debug
 
 # Walk over each of the disks, configuring it if required.
 wait_for_format = false
 found_disks = []
 to_use_disks.sort.each { |k|
   # By default, we will format first partition.
-  target_suffix= k + "1" 
+  target_suffix= k + "1"
   target_dev = "/dev/#{k}"
   target_dev_part = "/dev/#{target_suffix}"
-  
+
   # Protect against OS's that confuse ohai. if the device isn't there,
   # don't try to use it.
   if not File.exists?(target_dev)
@@ -97,18 +97,18 @@ to_use_disks.sort.each { |k|
   disk[:pid] = 0
   disk[:valid] = true
   disk[:name] = target_dev_part
-  
-  # Make sure that the kernel is aware of the current state of the 
+
+  # Make sure that the kernel is aware of the current state of the
   # drive partition tables.
   ::Kernel.system("partprobe #{target_dev}")
   # Let udev catch up, if needed.
   sleep 3
-  
+
   # Create the first partition on the disk if it does not already exist.
   # This takes barely any time, so don't bother parallelizing it.
   # Create the first partition starting at 1MB into the disk, and use GPT.
   # This ensures that it is optimally aligned from an RMW cycle minimization
-  # standpoint for just about everything - RAID stripes, SSD erase blocks, 
+  # standpoint for just about everything - RAID stripes, SSD erase blocks,
   # 4k sector drives, you name it, and we can have >2TB volumes.
   unless ::Kernel.system("grep -q \'#{target_suffix}$\' /proc/partitions")
     Chef::Log.info("HI - Creating hadoop partition on #{target_dev}")
@@ -117,8 +117,8 @@ to_use_disks.sort.each { |k|
     sleep 3
     ::Kernel.system("dd if=/dev/zero of=#{target_dev_part} bs=1024 count=65")
   end
-  
-  # Check to see if there is a volume on the first partition of the 
+
+  # Check to see if there is a volume on the first partition of the
   # drive. If not, fork and exec our disk formatter.
   if ::Kernel.system("blkid -c /dev/null #{target_dev_part} &>/dev/null")
     # This filesystem already exists. Save the UUID for later.
@@ -158,7 +158,7 @@ if wait_for_format
           Chef::Log.info("HI - disk format failed for #{disk[:name]}") if debug
         end
       }
-    end 
+    end
   }
 end
 
@@ -188,7 +188,7 @@ found_disks.each { |disk|
       next
     end
   end
-  
+
   # Make the HDFS file system mount point.
   if disk[:valid]
     # Mount the storage disks. These directories should be mounted noatime and the
@@ -196,21 +196,21 @@ found_disks.each { |disk|
     # UUID=b6447526-276d-457a-ad2f-54a5cc8bf450 /data/1 ext3 noatime,nodiratime 0 0
     # UUID=b5210382-750c-4c46-9e36-99baec825023 /data/2 ext3 noatime,nodiratime 0 0
     # UUID=2866e2a0-f191-4493-a080-c031b6bcbd12 /data/3 ext3 noatime,nodiratime 0 0
-    mount disk[:mount_point]  do  
+    mount disk[:mount_point]  do
       device disk[:uuid]
       device_type :uuid
       options "noatime,nodiratime"
-      dump 0  
-      pass 0 
+      dump 0
+      pass 0
       fstype fs_type
       action [:mount, :enable]
     end
-    
+
     # Update the crowbar data for this node.
     node[:hadoop_infrastructure][:devices] << disk
     node[:hadoop_infrastructure][:hdfs][:hdfs_mounts] << disk[:mount_point]
   end
-  
+
   cnt += 1
 }
 

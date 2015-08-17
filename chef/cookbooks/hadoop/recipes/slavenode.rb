@@ -43,36 +43,36 @@ end
 
 # Define our services so we can register notify events them.
 service "hadoop-0.20-datanode" do
-  supports :start => true, :stop => true, :status => true, :restart => true
+  supports start: true, stop: true, status: true, restart: true
   # Subscribe to common configuration change events (default.rb).
-  subscribes :restart, resources(:directory => node[:hadoop][:env][:hadoop_log_dir])
-  subscribes :restart, resources(:directory => node[:hadoop][:core][:hadoop_tmp_dir])
-  subscribes :restart, resources(:directory => node[:hadoop][:core][:fs_s3_buffer_dir])
-  subscribes :restart, resources(:template => "/etc/security/limits.conf")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/masters")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/slaves")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/core-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hdfs-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/mapred-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hadoop-env.sh")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hadoop-metrics.properties")
+  subscribes :restart, resources(directory: node[:hadoop][:env][:hadoop_log_dir])
+  subscribes :restart, resources(directory: node[:hadoop][:core][:hadoop_tmp_dir])
+  subscribes :restart, resources(directory: node[:hadoop][:core][:fs_s3_buffer_dir])
+  subscribes :restart, resources(template: "/etc/security/limits.conf")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/masters")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/slaves")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/core-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hdfs-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/mapred-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hadoop-env.sh")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hadoop-metrics.properties")
 end
 
 # Start the task tracker service.
 service "hadoop-0.20-tasktracker" do
-  supports :start => true, :stop => true, :status => true, :restart => true
+  supports start: true, stop: true, status: true, restart: true
   # Subscribe to common configuration change events (default.rb).
-  subscribes :restart, resources(:directory => node[:hadoop][:env][:hadoop_log_dir])
-  subscribes :restart, resources(:directory => node[:hadoop][:core][:hadoop_tmp_dir])
-  subscribes :restart, resources(:directory => node[:hadoop][:core][:fs_s3_buffer_dir])
-  subscribes :restart, resources(:template => "/etc/security/limits.conf")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/masters")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/slaves")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/core-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hdfs-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/mapred-site.xml")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hadoop-env.sh")
-  subscribes :restart, resources(:template => "/etc/hadoop/conf/hadoop-metrics.properties")
+  subscribes :restart, resources(directory: node[:hadoop][:env][:hadoop_log_dir])
+  subscribes :restart, resources(directory: node[:hadoop][:core][:hadoop_tmp_dir])
+  subscribes :restart, resources(directory: node[:hadoop][:core][:fs_s3_buffer_dir])
+  subscribes :restart, resources(template: "/etc/security/limits.conf")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/masters")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/slaves")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/core-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hdfs-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/mapred-site.xml")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hadoop-env.sh")
+  subscribes :restart, resources(template: "/etc/hadoop/conf/hadoop-metrics.properties")
 end
 
 # Set the dfs_data_dir ownership/permissions.
@@ -85,8 +85,8 @@ node[:hadoop][:hdfs][:dfs_data_dir].each do |path|
     mode "0755"
     recursive true
     action :create
-    notifies :restart, resources(:service => "hadoop-0.20-datanode")
-    notifies :restart, resources(:service => "hadoop-0.20-tasktracker")
+    notifies :restart, resources(service: "hadoop-0.20-datanode")
+    notifies :restart, resources(service: "hadoop-0.20-tasktracker")
   end
 end
 
@@ -99,8 +99,8 @@ mapred_local_dir.each do |path|
     mode "0755"
     recursive true
     action :create
-    notifies :restart, resources(:service => "hadoop-0.20-datanode")
-    notifies :restart, resources(:service => "hadoop-0.20-tasktracker")
+    notifies :restart, resources(service: "hadoop-0.20-datanode")
+    notifies :restart, resources(service: "hadoop-0.20-tasktracker")
   end
 end
 
@@ -108,24 +108,24 @@ if node[:hadoop][:cluster][:valid_config]
   Chef::Log.info("HADOOP : CONFIGURATION VALID - STARTING DATANODE SERVICES")
   # Start the data node service.
   service "hadoop-0.20-datanode" do
-    action [ :enable, :start ] 
+    action [:enable, :start]
   end
-  
+
   # Start the task tracker service.
   service "hadoop-0.20-tasktracker" do
-    action [ :enable, :start ] 
+    action [:enable, :start]
   end
 else
   Chef::Log.info("HADOOP : CONFIGURATION INVALID - STOPPING DATANODE SERVICES")
-  
+
   # Stop the data node service.
   service "hadoop-0.20-datanode" do
-    action [ :disable, :stop ] 
+    action [:disable, :stop]
   end
-  
+
   # Stop the task tracker service.
   service "hadoop-0.20-tasktracker" do
-    action [ :disable, :stop ] 
+    action [:disable, :stop]
   end
 end
 

@@ -36,7 +36,7 @@ end
 # Define the zookeeper server service.
 # {start|stop|restart|force-reload|status|force-stop}
 service "hadoop-zookeeper-server" do
-  supports :start => true, :stop => true, :restart => true, :status => true
+  supports start: true, stop: true, restart: true, status: true
   action :enable
 end
 
@@ -46,13 +46,13 @@ search(:node, "roles:zookeeper-server AND zookeeper_cluster_name:#{node[:zookeep
   ipaddress = BarclampLibrary::Barclamp::Inventory.get_network_by_type(n,"admin").address
   if ipaddress.nil? || ipaddress.empty?
     Chef::Log.warn("ZOOKEEPER : SERVER IP LOOKUP FAILED")
-  else    
+  else
     rec = {
-    :ipaddress => ipaddress,
-    :peer_port => n[:zookeeper][:peer_port],
-    :leader_port => n[:zookeeper][:leader_port],
-    :fqdn => n[:fqdn]
-    } 
+    ipaddress: ipaddress,
+    peer_port: n[:zookeeper][:peer_port],
+    leader_port: n[:zookeeper][:leader_port],
+    fqdn: n[:fqdn]
+    }
     Chef::Log.info("ZOOKEEPER : FOUND SERVER [" + rec[:ipaddress] + ", " + rec[:fqdn] + "]") if debug
     servers << rec
   end
@@ -67,14 +67,14 @@ end
 myip = BarclampLibrary::Barclamp::Inventory.get_network_by_type(node,"admin").address
 if myip.nil? || myip.empty?
   Chef::Log.warn("ZOOKEEPER : MYIP LOOKUP FAILED")
-else    
+else
   Chef::Log.info("ZOOKEEPER : MY IP [#{myip}]") if debug
   myid = servers.collect { |n| n[:ipaddress] }.index(myip)
-  myid = myid + 1 if !myid.nil? 
+  myid = myid + 1 if !myid.nil?
   Chef::Log.info("ZOOKEEPER : MY ID [#{myid}]") if debug
 end
 
-# Create data_log_dir and set ownership/permissions (/var/log/zookeeper). 
+# Create data_log_dir and set ownership/permissions (/var/log/zookeeper).
 data_log_dir = node[:zookeeper][:data_log_dir]
 directory data_log_dir do
   owner "zookeeper"
@@ -82,30 +82,30 @@ directory data_log_dir do
   mode "0755"
   action :create
   only_if { !data_log_dir.nil? && !data_log_dir.empty? }
-  notifies :restart, resources(:service => "hadoop-zookeeper-server")
+  notifies :restart, resources(service: "hadoop-zookeeper-server")
 end
 
 # Update the zookeeper log4j configuration.
 template "/etc/zookeeper/log4j.properties" do
   source "log4j.properties.erb"
   mode 0644
-  notifies :restart, resources(:service => "hadoop-zookeeper-server")
+  notifies :restart, resources(service: "hadoop-zookeeper-server")
 end
 
 # Update the zookeeper configuration file.
 template "/etc/zookeeper/zoo.cfg" do
   source "zoo.cfg.erb"
   mode 0644
-  variables(:servers => servers)
-  notifies :restart, resources(:service => "hadoop-zookeeper-server")
+  variables(servers: servers)
+  notifies :restart, resources(service: "hadoop-zookeeper-server")
 end
 
 # Update the zookeeper server id configuration.
 template "#{node[:zookeeper][:data_dir]}/myid" do
   source "myid.erb"
   mode 0644
-  variables(:myid => myid)
-  notifies :restart, resources(:service => "hadoop-zookeeper-server")
+  variables(myid: myid)
+  notifies :restart, resources(service: "hadoop-zookeeper-server")
 end
 
 # Update the zookeeper server startup script.
@@ -114,7 +114,7 @@ template "/usr/bin/zookeeper-server" do
   group "root"
   mode "0755"
   source "zookeeper-server.erb"
-  notifies :restart, resources(:service => "hadoop-zookeeper-server")
+  notifies :restart, resources(service: "hadoop-zookeeper-server")
 end
 
 # Start the zookeeper server process.

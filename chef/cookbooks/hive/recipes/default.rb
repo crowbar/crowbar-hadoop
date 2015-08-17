@@ -40,27 +40,27 @@ if node[:hive][:hive_metastore_mode] == "local" || node[:hive][:hive_metastore_m
   package "mysql-server" do
     action :install
   end
-  
+
   cookbook_file "/usr/lib/hive/lib/mysql-connector-java-5.1.22-bin.jar" do
     source "mysql-connector-java-5.1.22-bin.jar"
     owner "root"
     group "root"
     mode "0644"
   end
-  
+
   service "mysqld" do
-    supports :start => true, :stop => true, :status => true, :restart => true
+    supports start: true, stop: true, status: true, restart: true
     action :enable
   end
-  
+
   service "mysqld" do
-    action  :start
+    action :start
   end
 end
 
 # Define the hive server process.
 service "hive-server2" do
-  supports :start => true, :stop => true, :status => true, :restart => true
+  supports start: true, stop: true, status: true, restart: true
   action :enable
 end
 
@@ -70,12 +70,12 @@ template "/etc/hive/conf/hive-site.xml" do
   owner "root"
   group "root"
   mode "0644"
-  notifies :restart, resources(:service => "hive-server2")
+  notifies :restart, resources(service: "hive-server2")
 end
 
 # Start the hive server.
 service "hive-server2" do
-  action  :start
+  action :start
 end
 
 #######################################################################

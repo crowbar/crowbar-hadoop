@@ -26,7 +26,7 @@ default[:hadoop_infrastructure][:debug] = false
 # Crowbar configuration parameters.
 #######################################################################
 default[:hadoop_infrastructure][:config] = {}
-default[:hadoop_infrastructure][:config][:environment] = 'hadoop_infrastructure-config-default'
+default[:hadoop_infrastructure][:config][:environment] = "hadoop_infrastructure-config-default"
 
 #######################################################################
 # Operating system configuration parameters.
@@ -35,15 +35,15 @@ default[:hadoop_infrastructure][:config][:environment] = 'hadoop_infrastructure-
 #----------------------------------------------------------------------
 # File system type (ext3/ext4/xfs). Must be a valid mkfs type (See man mkfs).
 #----------------------------------------------------------------------
-default[:hadoop_infrastructure][:os][:fs_type] = 'ext4'
+default[:hadoop_infrastructure][:os][:fs_type] = "ext4"
 
 #----------------------------------------------------------------------
 # Hadoop open file limits - /etc/security/limits.conf.
 #----------------------------------------------------------------------
-default[:hadoop_infrastructure][:os][:mapred_openfiles] = '32768'
-default[:hadoop_infrastructure][:os][:hdfs_openfiles] = '32768'
-default[:hadoop_infrastructure][:os][:hbase_openfiles] = '32768'
-default[:hadoop_infrastructure][:os][:thp_compaction] = 'never'
+default[:hadoop_infrastructure][:os][:mapred_openfiles] = "32768"
+default[:hadoop_infrastructure][:os][:hdfs_openfiles] = "32768"
+default[:hadoop_infrastructure][:os][:hbase_openfiles] = "32768"
+default[:hadoop_infrastructure][:os][:thp_compaction] = "never"
 
 #######################################################################
 # Cluster configuration parameters.
@@ -59,7 +59,7 @@ default[:hadoop_infrastructure][:cluster][:hajournalingnodes] = []
 #######################################################################
 # HDFS configuration parameters.
 #######################################################################
-default[:hadoop_infrastructure][:hdfs][:dfs_base_dir] = '/data'
+default[:hadoop_infrastructure][:hdfs][:dfs_base_dir] = "/data"
 default[:hadoop_infrastructure][:hdfs][:hdfs_mounts] = []
 
 #######################################################################
@@ -77,6 +77,6 @@ default[:hadoop_infrastructure][:devices] = []
 # shared_edits_mount_options specifies the mount options for the
 # nfs mount point. These parameters are only used for NFS filer HA mode.
 #----------------------------------------------------------------------
-default[:hadoop_infrastructure][:ha][:shared_edits_directory] = '/dfs/ha'
-default[:hadoop_infrastructure][:ha][:shared_edits_export_options] = 'rw,async,no_root_squash,no_subtree_check'
-default[:hadoop_infrastructure][:ha][:shared_edits_mount_options] = 'rsize=65536,wsize=65536,intr,soft,bg'
+default[:hadoop_infrastructure][:ha][:shared_edits_directory] = "/dfs/ha"
+default[:hadoop_infrastructure][:ha][:shared_edits_export_options] = "rw,async,no_root_squash,no_subtree_check"
+default[:hadoop_infrastructure][:ha][:shared_edits_mount_options] = "rsize=65536,wsize=65536,intr,soft,bg"

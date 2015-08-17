@@ -65,8 +65,8 @@ default[:hadoop][:hdfs][:dfs_client_block_write_retries] = "3"
 # its blocks. If this is a comma-delimited list of directories, then data
 # will be stored in all named directories, typically on different devices.
 # Directories that do not exist are ignored.
-# DEFAULT: ${hadoop.tmp.dir}/dfs/data. 
-default[:hadoop][:hdfs][:dfs_data_dir] = [ "/mnt/hdfs/hdfs01/data1" ]
+# DEFAULT: ${hadoop.tmp.dir}/dfs/data.
+default[:hadoop][:hdfs][:dfs_data_dir] = ["/mnt/hdfs/hdfs01/data1"]
 
 # The address where the datanode server will listen to. If the port is 0
 # then the server will start on a free port.
@@ -155,14 +155,14 @@ default[:hadoop][:hdfs][:dfs_max_objects] = ""
 # then the name table is replicated in all of the directories, for
 # redundancy.
 # DEFAULT: ${hadoop.tmp.dir}/dfs/name.
-default[:hadoop][:hdfs][:dfs_name_dir] = [ "/mnt/hdfs/hdfs01/meta1" ]
+default[:hadoop][:hdfs][:dfs_name_dir] = ["/mnt/hdfs/hdfs01/meta1"]
 
 # Determines where on the local filesystem the DFS name node should store
 # the transaction (edits) file. If this is a comma-delimited list of
 # directories then the transaction file is replicated in all of the
 # directories, for redundancy. Default value is same as dfs.name.dir.
 # DEFAULT: [ "${dfs.name.dir}" ]
-default[:hadoop][:hdfs][:dfs_name_edits_dir] = [ "/mnt/hdfs/hdfs01/meta1" ]
+default[:hadoop][:hdfs][:dfs_name_edits_dir] = ["/mnt/hdfs/hdfs01/meta1"]
 
 # Namenode periodicity in seconds to check if decommission is complete.
 default[:hadoop][:hdfs][:dfs_namenode_decommission_interval] = "30"

@@ -18,37 +18,36 @@
 #
 
 class HiveService < ServiceObject
-  
   def initialize(thelogger)
     @bc_name = "hive"
     @logger = thelogger
   end
-  
+
   def create_proposal
     @logger.debug("hive create_proposal: entering")
     base = super
-    
+
     # Get the node list.
     nodes = NodeObject.all
     nodes.delete_if { |n| n.nil? }
-    
+
     # Find all hadoop edge nodes.
     edge_nodes = nodes.find_all { |n| n.role? "hadoop-edgenode" or n.role? "clouderamanager-edgenode" }
     edge_fqdns = []
     edge_nodes.each { |x|
       next if x.nil?
-      edge_fqdns << x[:fqdn] if x[:fqdn] && !x[:fqdn].empty? 
+      edge_fqdns << x[:fqdn] if x[:fqdn] && !x[:fqdn].empty?
     }
-    
+
     # Add proposal elements.
-    base["deployment"]["hive"]["elements"] = {} 
-    if edge_fqdns && edge_fqdns.length > 0 
+    base["deployment"]["hive"]["elements"] = {}
+    if edge_fqdns && edge_fqdns.length > 0
       # @logger.info("GOT EDGE " + edge_fqdns.to_s)
-      base["deployment"]["hive"]["elements"]["hive-interpreter"] = edge_fqdns 
+      base["deployment"]["hive"]["elements"]["hive-interpreter"] = edge_fqdns
     else
       @logger.debug("hive create_proposal: No edge nodes found")
     end
-    
+
     # @logger.debug("hive create_proposal: #{base.to_json}")
     @logger.debug("hive create_proposal: exiting")
     base

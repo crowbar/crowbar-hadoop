@@ -328,8 +328,8 @@ default[:hadoop][:mapred][:mapred_line_input_format_linespermap] = "1"
 # The local directory where MapReduce stores intermediate data files. May
 # be a comma-separated list of directories on different devices in order to
 # spread disk I/O. Directories that do not exist are ignored.
-# DEFAULT: "${hadoop.tmp.dir}/mapred/local"  
-default[:hadoop][:mapred][:mapred_local_dir] = [ "/var/lib/hadoop-0.20/cache/mapred/mapred/local" ]
+# DEFAULT: "${hadoop.tmp.dir}/mapred/local"
+default[:hadoop][:mapred][:mapred_local_dir] = ["/var/lib/hadoop-0.20/cache/mapred/mapred/local"]
 
 # If the space in mapred.local.dir drops under this, do not ask more tasks
 # until all the current ones have finished and cleaned up. Also, to save

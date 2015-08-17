@@ -21,9 +21,9 @@ class ApachehadoopController < BarclampController
   def initialize
     @service_object = ApachehadoopService.new logger
   end
-  
+
   def index
-    @title = I18n.t('title', :scope=>'barclamp.apachehadoop.index')
+    @title = I18n.t("title", scope: "barclamp.apachehadoop.index")
     super
   end
 end

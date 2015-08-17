@@ -20,20 +20,19 @@
 #
 
 class ZookeeperService < ServiceObject
-  
   def initialize(thelogger)
     @bc_name = "zookeeper"
     @logger = thelogger
   end
-  
+
   def create_proposal
     @logger.debug("zookeeper create_proposal: entering")
     base = super
-    
+
     # Get the node list.
     nodes = NodeObject.all
     nodes.delete_if { |n| n.nil? }
-    
+
     # Find the slave nodes for the zookeeper servers.
     # The number of slaves to use depends on the number of failed
     # nodes to support. We follow the (2F+1) rule so we stop allocating
@@ -43,23 +42,22 @@ class ZookeeperService < ServiceObject
     node_cnt = 0
     slave_nodes.each { |x|
       next if x.nil?
-      if !x[:fqdn].nil? && !x[:fqdn].empty? 
-        slave_fqdns << x[:fqdn]  
+      if !x[:fqdn].nil? && !x[:fqdn].empty?
+        slave_fqdns << x[:fqdn]
         node_cnt = node_cnt +1
         break if node_cnt >= 5
       end
     }
-    
+
     # Check for errors or add the proposal elements.
-    base["deployment"]["zookeeper"]["elements"] = { } 
-    if !slave_fqdns.nil? && slave_fqdns.length > 0 
-      base["deployment"]["zookeeper"]["elements"]["zookeeper-server"] = slave_fqdns 
+    base["deployment"]["zookeeper"]["elements"] = { }
+    if !slave_fqdns.nil? && slave_fqdns.length > 0
+      base["deployment"]["zookeeper"]["elements"]["zookeeper-server"] = slave_fqdns
     else
       @logger.debug("zookeeper create_proposal: No slave nodes found, proposal bind failed")
     end
-    
+
     @logger.debug("zookeeper create_proposal: exiting")
     base
   end
-  
 end

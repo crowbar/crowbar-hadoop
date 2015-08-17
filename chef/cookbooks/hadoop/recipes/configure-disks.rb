@@ -28,11 +28,11 @@ to_use_disks = []
 found_disks = []
 all_disks = node["crowbar"]["disks"]
 all_disks.each { |k,v|
-  to_use_disks << k if v["usage"] == "Storage"  
+  to_use_disks << k if v["usage"] == "Storage"
 }
-Chef::Log.info("HADOOP: found disk: #{to_use_disks.join(':')}") if debug  
+Chef::Log.info("HADOOP: found disk: #{to_use_disks.join(':')}") if debug
 
-dfs_base_dir = node[:hadoop][:hdfs][:dfs_base_dir] 
+dfs_base_dir = node[:hadoop][:hdfs][:dfs_base_dir]
 # Walk over each of the disks, configuring it if we have to.
 node[:hadoop][:devices] = []
 node[:hadoop][:hdfs][:dfs_data_dir] = []
@@ -49,7 +49,7 @@ end
 
 to_use_disks.sort.each { |k|
   # By default, we will format first partition.
-  target_suffix= k + "1" 
+  target_suffix= k + "1"
   target_dev = "/dev/#{k}"
   target_dev_part = "/dev/#{target_suffix}"
   # Protect against OS's that confuse ohai. if the device isn't there,
@@ -60,18 +60,18 @@ to_use_disks.sort.each { |k|
   end
   disk = Hash.new
   disk[:name] = target_dev_part
-  
-  # Make sure that the kernel is aware of the current state of the 
+
+  # Make sure that the kernel is aware of the current state of the
   # drive partition tables.
   ::Kernel.system("partprobe #{target_dev}")
   # Let udev catch up, if needed
   sleep 3
-  
+
   # Create the first partition on the disk if it does not already exist.
   # This takes barely any time, so don't bother parallelizing it.
   # Create the first partition starting at 1MB into the disk, and use GPT.
   # This ensures that it is optimally aligned from an RMW cycle minimization
-  # standpoint for just about everything -- RAID stripes, SSD erase blocks, 
+  # standpoint for just about everything -- RAID stripes, SSD erase blocks,
   # 4k sector drives, you name it, and we can have >2TB volumes.
   unless ::Kernel.system("grep -q \'#{target_suffix}$\' /proc/partitions")
     Chef::Log.info("HADOOP: Creating hadoop partition on #{target_dev}")
@@ -80,8 +80,8 @@ to_use_disks.sort.each { |k|
     sleep 3
     ::Kernel.system("dd if=/dev/zero of=#{target_dev_part} bs=1024 count=65")
   end
-  
-  # Check to see if there is a volume on the first partition of the 
+
+  # Check to see if there is a volume on the first partition of the
   # drive.  If not, fork and exec our formatter.  We will wait later.
   if ::Kernel.system("blkid -c /dev/null #{target_dev_part} &>/dev/null")
     # This filesystem already exists.  Save its UUID for later.
@@ -92,7 +92,7 @@ to_use_disks.sort.each { |k|
     disk[:fresh] = true
     wait_for_format = true
   end
-  
+
   found_disks << disk.dup
 }
 
@@ -105,7 +105,7 @@ end
 # Setup the mount points, if needed
 found_disks.each { |disk|
   if disk[:fresh]
-    # We just created this filesystem.  
+    # We just created this filesystem.
     # Grab its UUID and create a mount point.
     disk[:uuid]=get_uuid disk[:name]
     Chef::Log.info("HADOOP: Adding #{disk[:name]} (#{disk[:uuid]}) to the Hadoop configuration.")
@@ -121,15 +121,15 @@ found_disks.each { |disk|
       next
     end
   end
-  
+
   node[:hadoop][:devices] << disk
   node[:hadoop][:hdfs][:dfs_data_dir] << ::File.join(disk[:mount_point],"data")
   node[:hadoop][:mapred][:mapred_local_dir] << ::File.join(disk[:mount_point],"mapred")
-  mount disk[:mount_point]  do  
+  mount disk[:mount_point]  do
     device disk[:uuid]
     device_type :uuid
     options "noatime,nodiratime"
-    dump 0  
+    dump 0
     pass 0 # no FSCK testing.
     fstype "ext3"
     action [:mount, :enable]
