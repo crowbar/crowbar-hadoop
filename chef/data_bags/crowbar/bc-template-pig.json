@@ -1,0 +1,50 @@
+{
+  "id": "bc-template-pig",
+  "description": "Platform for analyzing large data sets that consists of a high-level language for expressing data algorithms.",
+  "attributes": {
+    "pig": {
+      "debug": false,
+      "java_home": "/usr/java/jdk1.6.0_31/jre",
+      "log4jconf": "./conf/log4j.properties",
+      "brief": "false",
+      "cluster": "",
+      "debug_level": "INFO",
+      "file": "",
+      "jar": "",
+      "verbose": "false",
+      "exectype": "mapreduce",
+      "ssh_gateway": "",
+      "hod_expect_root": "",
+      "hod_expect_uselatest": "",
+      "hod_command": "",
+      "hod_config_dir": "",
+      "hod_param": "",
+      "pig_spill_size_threshold": "5000000",
+      "pig_spill_gc_activation_size": "40000000",
+      "log_file": ""
+    }
+  },
+  "deployment": {
+    "pig": {
+      "crowbar-revision": 0,
+      "element_states": {
+        "pig-interpreter": [ "readying", "ready", "applying" ]
+      },
+      "elements": {},
+      "element_order": [
+        [ 
+          "pig-interpreter"
+		]
+      ],
+      "config": {
+        "environment": "pig-base-config",
+        "mode": "full",
+        "transitions": true,
+        "transition_list": [
+          "installed"
+        ]
+      } 
+    }
+  }
+}
+
