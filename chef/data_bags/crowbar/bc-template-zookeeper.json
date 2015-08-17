@@ -1,0 +1,42 @@
+{
+  "id": "bc-template-zookeeper",
+  "description": "High-performance coordination service for distributed applications. ZooKeeper provides primitives such as distributed locks which can be used for building large scale distributed processing applications.",
+  "attributes": {
+    "zookeeper": {
+      "debug": true,
+      "cluster_name": "default",
+      "tick_time": "2000",
+      "init_limit": "10",
+      "sync_limit": "5",
+      "client_port": "2181",
+      "peer_port": "2888",
+      "leader_port": "3888",
+      "data_dir": "/var/zookeeper",
+      "jvm_flags": "-Dzookeeper.log.threshold=INFO -Xmx4G",
+      "data_log_dir": "/var/log/zookeeper"
+    }
+  },
+  "deployment": {
+    "zookeeper": {
+      "crowbar-revision": 0,
+      "element_states": {
+        "zookeeper-server": [ "readying", "ready", "applying" ]
+      },
+      "elements": {},
+      "element_order": [
+        [
+         "zookeeper-server"
+        ]
+      ],
+      "config": {
+        "environment": "zookeeper-base-config",
+        "mode": "full",
+        "transitions": true,
+        "transition_list": [
+          "installed"
+        ]
+      } 
+    }
+  }
+}
+
