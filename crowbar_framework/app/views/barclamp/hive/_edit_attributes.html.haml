@@ -1,0 +1,29 @@
+- register_javascripts "barclamps/glance/form"
+
+= attributes_for @proposal do
+  .panel-sub
+    = header @dep_raw, true
+
+  .panel-body
+    = boolean_field :debug
+
+    %fieldset
+      %legend
+        = t(".hive_settings")
+
+      = select_field :hive_metastore_mode, :collection => :metastore_modes_for_hive
+      = string_field :hive_default_fileformat
+      = boolean_field :hive_exec_compress_intermediate
+      = boolean_field :hive_exec_compress_output
+      = string_field :hive_exec_scratchdir
+      = string_field :hive_exec_script_maxerrsize
+      = string_field :hive_join_emit_interval
+      = boolean_field :hive_map_aggr
+      = string_field :hive_metastore_connect_retries
+      = boolean_field :hive_metastore_local
+      = string_field :hive_metastore_metadb_dir
+      = string_field :hive_metastore_rawstore_impl
+      = string_field :hive_metastore_uris
+      = string_field :hive_metastore_warehouse_dir
+      = string_field :javax_jdo_option_ConnectionDriverName
+      = string_field :javax_jdo_option_ConnectionURL
