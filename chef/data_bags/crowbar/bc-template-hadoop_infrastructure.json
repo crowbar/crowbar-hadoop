@@ -1,0 +1,57 @@
+{
+  "id": "bc-template-hadoop_infrastructure",
+  "description": "Provides the basic runtime environment for Hadoop cluster deployment.",
+  "attributes": {
+    "hadoop_infrastructure": {
+      "debug": false,
+	  "admin_ip_eval": "Chef::Recipe::Barclamp::Inventory.get_network_by_type(node, \"admin\").address",
+      "admin_interface_eval": "Chef::Recipe::Barclamp::Inventory.get_network_by_type(node, \"admin\").interface",
+      "os": {
+          "fs_type": "ext4",
+          "thp_compaction": "never",
+		  "mapred_openfiles": "32768",
+          "hdfs_openfiles": "32768",
+          "hbase_openfiles": "32768"
+      },
+      "ha": {
+          "shared_edits_directory": "/dfs/ha",
+          "shared_edits_export_options": "rw,async,no_root_squash,no_subtree_check",
+          "shared_edits_mount_options": "rsize=65536,wsize=65536,intr,soft,bg"
+      }
+    }
+  },
+  "deployment": {
+    "hadoop_infrastructure": {
+      "crowbar-revision": 0,
+      "element_states": {
+        "hadoop_infrastructure-cb-adminnode":   [ "readying", "ready", "applying" ],
+        "hadoop_infrastructure-server":   [ "readying", "ready", "applying" ],
+		"hadoop_infrastructure-namenode": [ "readying", "ready", "applying" ],
+        "hadoop_infrastructure-edgenode": [ "readying", "ready", "applying" ],
+        "hadoop_infrastructure-datanode": [ "readying", "ready", "applying" ],
+        "hadoop_infrastructure-ha-journalingnode": [ "readying", "ready", "applying" ],
+        "hadoop_infrastructure-ha-filernode": [ "readying", "ready", "applying" ]
+      },
+      "elements": {},
+      "element_order": [
+        [
+          "hadoop_infrastructure-cb-adminnode",
+          "hadoop_infrastructure-server",
+          "hadoop_infrastructure-namenode",
+          "hadoop_infrastructure-datanode",
+          "hadoop_infrastructure-edgenode",
+          "hadoop_infrastructure-ha-journalingnode",
+          "hadoop_infrastructure-ha-filernode"
+        ]
+      ],
+      "config": {
+        "environment": "hadoop_infrastructure-base-config",
+        "mode": "full",
+        "transitions": true,
+        "transition_list": [
+          "installed"
+        ]
+      } 
+    }
+  }
+}
