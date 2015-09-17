@@ -1,5 +1,5 @@
 {
-  "id": "bc-template-hive",
+  "id": "template-hive",
   "description": "Data warehouse infrastructure that provides SQL based data summarization and ad hoc querying.",
   "attributes": {
     "hive": {
