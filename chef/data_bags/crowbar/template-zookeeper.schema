@@ -2,35 +2,27 @@
   "type": "map",
   "required": true,
   "mapping": {
-    "id": { "type": "str", "required": true, "pattern": "/^bc-pig-|^bc-template-pig$/" },
+    "id": { "type": "str", "required": true, "pattern": "/^zookeeper-|^template-zookeeper$/" },
     "description": { "type": "str", "required": true },
     "attributes": {
       "type": "map",
       "required": true,
       "mapping": {
-        "pig": {
+        "zookeeper": {
           "type": "map",
           "required": true,
           "mapping": {
             "debug":  { "type": "bool", "required": true},
-            "java_home": { "type": "str", "required": true},
-            "log4jconf": { "type": "str", "required": false},
-            "brief": { "type": "str", "required": false},
-            "cluster": { "type": "str", "required": false},
-            "debug_level": { "type": "str", "required": false},
-            "file": { "type": "str", "required": false},
-            "jar": { "type": "str", "required": false},
-            "verbose": { "type": "str", "required": false},
-            "exectype": { "type": "str", "required": false},
-            "ssh_gateway": { "type": "str", "required": false},
-            "hod_expect_root": { "type": "str", "required": false},
-            "hod_expect_uselatest": { "type": "str", "required": false},
-            "hod_command": { "type": "str", "required": false},
-            "hod_config_dir": { "type": "str", "required": false},
-            "hod_param": { "type": "str", "required": false},
-            "pig_spill_size_threshold": { "type": "str", "required": false},
-            "pig_spill_gc_activation_size": { "type": "str", "required": false},
-            "log_file": { "type": "str", "required": false}            
+            "cluster_name": { "type": "str", "required": true},
+            "tick_time": { "type": "str", "required": true},
+            "init_limit": { "type": "str", "required": true},
+            "sync_limit": { "type": "str", "required": true},
+            "client_port": { "type": "str", "required": true},
+            "peer_port": { "type": "str", "required": true},
+            "leader_port": { "type": "str", "required": true},
+            "data_dir": { "type": "str", "required": true},
+            "jvm_flags": { "type": "str", "required": true},
+            "data_log_dir": { "type": "str", "required": false}            
           } 
         }
       }
@@ -39,7 +31,7 @@
       "type": "map",
       "required": true,
       "mapping": {
-        "pig": {
+        "zookeeper": {
           "type": "map",
           "required": true,
           "mapping": {

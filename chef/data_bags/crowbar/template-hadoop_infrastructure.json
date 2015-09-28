@@ -1,5 +1,5 @@
 {
-  "id": "bc-template-hadoop_infrastructure",
+  "id": "template-hadoop_infrastructure",
   "description": "Provides the basic runtime environment for Hadoop cluster deployment.",
   "attributes": {
     "hadoop_infrastructure": {

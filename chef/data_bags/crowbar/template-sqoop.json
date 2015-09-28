@@ -1,5 +1,5 @@
 {
-  "id": "bc-template-sqoop",
+  "id": "template-sqoop",
   "description": "SQL based command-line tool to assist with HDFS data import/export (SQL-to-Hadoop).",
   "attributes": {
     "sqoop": {

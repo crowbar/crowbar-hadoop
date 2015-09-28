@@ -1,5 +1,5 @@
 {
-  "id": "bc-template-zookeeper",
+  "id": "template-zookeeper",
   "description": "High-performance coordination service for distributed applications. ZooKeeper provides primitives such as distributed locks which can be used for building large scale distributed processing applications.",
   "attributes": {
     "zookeeper": {

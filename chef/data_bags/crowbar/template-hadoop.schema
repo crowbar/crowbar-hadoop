@@ -2,7 +2,7 @@
   "type": "map",
   "required": true,
   "mapping": {
-    "id": { "type": "str", "required": true, "pattern": "/^bc-hadoop-|^bc-template-hadoop$/" },
+    "id": { "type": "str", "required": true, "pattern": "/^hadoop-|^template-hadoop$/" },
     "description": { "type": "str", "required": true },
     "attributes": {
       "type": "map",
