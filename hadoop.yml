@@ -33,8 +33,6 @@ crowbar:
 nav:
   barclamps:
     hadoop: index_barclamp_path(:controller=>'hadoop')
-  help:
-    hadoop_ug: '"/hadoop_users_guide.pdf", { :link => { :target => "_blank" } }'
 
 rpms:
   redhat-5.7:
