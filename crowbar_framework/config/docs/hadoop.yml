@@ -1,0 +1,23 @@
+en:
+  docs:
+    deployment:
+      heading: 'Deployment Resources'
+      order: 100
+      items:
+        hadoop_users_guide:
+          text: 'Hadoop User Guide'
+          pdf: '/docs/hadoop_users_guide.pdf'
+          order: 300
+
+# Here's an example of how to add links for downstream documentation
+#    others:
+#      heading: 'Other Resources'
+#      items:
+#        end_user_guide:
+#          text: 'End User Guide'
+#          link: '/docs/user/'
+#          pdf: '/docs/user_en.pdf'
+#        admin_user_guide:
+#          text: 'Admin User Guide'
+#          link: '/docs/admin/'
+#          pdf: '/docs/admin_en.pdf'
